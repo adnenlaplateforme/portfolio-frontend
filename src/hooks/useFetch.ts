@@ -1,8 +1,12 @@
-export async function apiFetch(endpoint, options = {}) {
-  const base = import.meta.env.VITE_API_URL;
+type FetchOptions = Omit<RequestInit, 'headers'> & {
+  headers?: Record<string, string>;
+};
+
+export async function apiFetch(endpoint: string, options: FetchOptions = {}) {
+  const base = import.meta.env.VITE_API_URL as string;
   const token = localStorage.getItem('token');
 
-  const headers = {
+  const headers: Record<string, string> = {
     'Content-Type': 'application/json',
     ...options.headers,
   };
@@ -11,7 +15,8 @@ export async function apiFetch(endpoint, options = {}) {
   const response = await fetch(`${base}${endpoint}`, { ...options, headers });
 
   if (!response.ok) {
-    const err = await response.json().catch(() => ({}));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const err: any = await response.json().catch(() => ({}));
     throw new Error(err.message || err.errors?.[0]?.msg || response.statusText);
   }
 
@@ -20,6 +25,6 @@ export async function apiFetch(endpoint, options = {}) {
   return response.json();
 }
 
-export default function useFetch(path) {
+export default function useFetch(_path: string) {
   // TODO
 }
