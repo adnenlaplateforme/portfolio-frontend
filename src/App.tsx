@@ -6,7 +6,7 @@ import LoginPage from './pages/LoginPage';
 import AdminPage from './pages/admin/AdminPage';
 import CreateProjectPage from './pages/admin/CreateProjectPage';
 import EditProjectPage from './pages/admin/EditProjectPage';
-import ProtectedRoute from './router/ProtectedRoute';
+import PrivateRoute from './router/PrivateRoute';
 
 export default function App() {
   return (
@@ -16,11 +16,9 @@ export default function App() {
       <Route path="/projects/:id" element={<ProjectDetailPage />} />
       <Route path="/login" element={<LoginPage />} />
 
-      <Route element={<ProtectedRoute />}>
-        <Route path="/admin" element={<AdminPage />} />
-        <Route path="/admin/projects/create" element={<CreateProjectPage />} />
-        <Route path="/admin/projects/:id/edit" element={<EditProjectPage />} />
-      </Route>
+      <Route path="/admin" element={<PrivateRoute><AdminPage /></PrivateRoute>} />
+      <Route path="/admin/projects/create" element={<PrivateRoute><CreateProjectPage /></PrivateRoute>} />
+      <Route path="/admin/projects/:id/edit" element={<PrivateRoute><EditProjectPage /></PrivateRoute>} />
 
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
