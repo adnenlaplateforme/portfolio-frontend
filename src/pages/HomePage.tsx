@@ -1,6 +1,5 @@
 export default function HomePage() {
-  
-  return(
+  return (
     <h1 className="text-center text-5xl">Mon portfolio</h1>
   );
 }
