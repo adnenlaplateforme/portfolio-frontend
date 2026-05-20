@@ -7,10 +7,13 @@ import AdminPage from './pages/admin/AdminPage';
 import CreateProjectPage from './pages/admin/CreateProjectPage';
 import EditProjectPage from './pages/admin/EditProjectPage';
 import PrivateRoute from './router/PrivateRoute';
+import Navbar from './components/Navbar';
 
 export default function App() {
   return (
-    <Routes>
+    <>
+      <Navbar />
+      <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/projects" element={<ProjectsPage />} />
       <Route path="/projects/:id" element={<ProjectDetailPage />} />
@@ -22,5 +25,6 @@ export default function App() {
 
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
+    </>
   );
 }
