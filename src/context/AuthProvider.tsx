@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { useState } from 'react';
 import AuthContext from './AuthContext';
-import { isTokenValid } from '../utils/jwt.utils';
+import { isTokenValid, getRoleFromToken } from '../utils/jwt.utils';
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState<string | null>(() => {
@@ -24,7 +24,12 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated: token !== null, login, logout }}>
+    <AuthContext.Provider value={{
+      isAuthenticated: token !== null,
+      role: getRoleFromToken(token),
+      login,
+      logout,
+    }}>
       {children}
     </AuthContext.Provider>
   );

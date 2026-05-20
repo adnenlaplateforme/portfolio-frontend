@@ -19,7 +19,7 @@ export default function App() {
       <Route path="/projects/:id" element={<ProjectDetailPage />} />
       <Route path="/login" element={<LoginPage />} />
 
-      <Route path="/admin" element={<PrivateRoute><AdminPage /></PrivateRoute>} />
+      <Route path="/admin" element={<PrivateRoute role='admin'><AdminPage /></PrivateRoute>} />
       <Route path="/admin/projects/create" element={<PrivateRoute><CreateProjectPage /></PrivateRoute>} />
       <Route path="/admin/projects/:id/edit" element={<PrivateRoute><EditProjectPage /></PrivateRoute>} />
 
