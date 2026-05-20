@@ -1,0 +1,30 @@
+import { useState } from 'react';
+import AuthContext from './AuthContext';
+import { isTokenValid } from '../utils/jwt.utils';
+
+export default function AuthProvider({ children }) {
+  const [token, setToken] = useState(() => {
+    const stored = localStorage.getItem('token');
+    if (!isTokenValid(stored)) {
+      localStorage.removeItem('token');
+      return null;
+    }
+    return stored;
+  });
+
+  function login(newToken) {
+    localStorage.setItem('token', newToken);
+    setToken(newToken);
+  }
+
+  function logout() {
+    localStorage.removeItem('token');
+    setToken(null);
+  }
+
+  return (
+    <AuthContext.Provider value={{ isAuthenticated: token !== null, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
+}
